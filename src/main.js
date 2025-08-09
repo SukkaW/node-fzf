@@ -27,7 +27,7 @@ const ansiRegex = function() {
 // get printed width of text
 // ex. 漢字 are 4 characters wide but still
 // only 2 characters in length
-const _stringWidth = require( 'string-width' )
+const _stringWidth = require( 'fast-string-width' )
 function stringWidth ( str ) {
   return Math.max( str.replace(ansiRegex, '').length, _stringWidth( str ) )
 }
@@ -287,18 +287,15 @@ function queryUser ( opts, callback )
               }
             }
             return render()
-            break
 
           case 'j': // down
           case 'n': // down
             selectedIndex += 1
             return render()
-            break
           case 'k': // up
           case 'p': // up
             selectedIndex -= 1
             return render()
-            break
 
           case 'l': // right
             // ignore
@@ -311,7 +308,6 @@ function queryUser ( opts, callback )
               _opts.mode = modes[ ++i % modes.length ]
             }
             return render()
-            break
 
           case 'f': // jump forward 1 word
             {
@@ -325,24 +321,20 @@ function queryUser ( opts, callback )
               }
             }
             return render()
-            break
 
           case 'd': // down
             // basically intended as page-down
             selectedIndex += view_height
             return render()
-            break
 
           case 'u': // up
             // basically intended as page-up
             selectedIndex -= view_height
             return render()
-            break
 
           case 'a': // beginning of line
             cursorPosition = 0
             return render()
-            break
 
           case 'e': // end of line
             // TODO right-align names if already at end of line (useful for
@@ -354,7 +346,6 @@ function queryUser ( opts, callback )
               cursorPosition = inputBuffer.length
             }
             return render()
-            break
 
           case 'w': // clear word
             {
@@ -371,7 +362,6 @@ function queryUser ( opts, callback )
               }
             }
             return render()
-            break
 
           case 'q': // quit
             cleanDirtyScreen()
@@ -408,7 +398,6 @@ function queryUser ( opts, callback )
             }
           }
           return render()
-          break
 
         case 'left': // left arrow key
           if ( _opts.nolist ) {
@@ -419,7 +408,6 @@ function queryUser ( opts, callback )
             scrollOffset--
             return render()
           }
-          break
 
         case 'right': // right arrow key
           if ( _opts.nolist ) {
@@ -432,7 +420,6 @@ function queryUser ( opts, callback )
             scrollOffset++
             return render()
           }
-          break
 
         // text terminals treat ctrl-j as newline ( enter )
         // ref: https://ss64.com/bash/syntax-keyboard.html
